@@ -1,3 +1,4 @@
+import 'package:climate/constants.dart';
 import 'package:climate/features/botton_nav_bar/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:climate/features/chat/presentation/view/chat_view.dart';
 import 'package:climate/features/home/presentation/home_view.dart';
@@ -38,7 +39,7 @@ class MainView extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: BottomNavigationBar(
-                      backgroundColor: Colors.black,
+                      backgroundColor: AppColors.backgroundColor,
                       currentIndex: state.currentIndex,
                       onTap: context.read<BottomNavCubit>().changeTab,
 
@@ -46,8 +47,8 @@ class MainView extends StatelessWidget {
                       showUnselectedLabels: false,
                       type: BottomNavigationBarType.fixed,
 
-                      selectedItemColor: Colors.white,
-                      unselectedItemColor: Colors.grey,
+                      selectedItemColor: AppColors.primaryColor,
+                      unselectedItemColor: AppColors.textColor,
 
                       items: const [
                         BottomNavigationBarItem(
