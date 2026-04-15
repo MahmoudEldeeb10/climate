@@ -1,4 +1,3 @@
-import 'package:climate/constants.dart';
 import 'package:climate/features/home/presentation/view/widgets/custom_search.dart';
 import 'package:flutter/material.dart';
 
