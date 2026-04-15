@@ -45,11 +45,11 @@ class MainView extends StatelessWidget {
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.insights_outlined),
-                        label: 'Insights',
+                        label: 'AI Insights',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.chat_outlined),
-                        label: 'Chat',
+                        label: 'Chat Bot',
                       ),
                     ],
                   ),
