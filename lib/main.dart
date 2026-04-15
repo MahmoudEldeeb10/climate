@@ -1,3 +1,4 @@
+import 'package:climate/constants.dart';
 import 'package:climate/features/botton_nav_bar/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:climate/features/botton_nav_bar/presentation/views/main_view.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +18,7 @@ class ClimateApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            // elevation: 0,
-          ),
-        ),
+        theme: ThemeData(scaffoldBackgroundColor: AppColors.backgroundColor),
         home: MainView(),
       ),
     );
