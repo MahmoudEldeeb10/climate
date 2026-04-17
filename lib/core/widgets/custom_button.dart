@@ -1,3 +1,4 @@
+import 'package:climate/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -37,7 +38,7 @@ class CustomButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
-              Icon(icon!.icon, color: Colors.black, size: 24),
+              Icon(icon!.icon, color: AppColors.primaryText, size: 24),
               const SizedBox(width: 8),
             ],
             Text(
