@@ -1,3 +1,4 @@
+import 'package:climate/constants.dart';
 import 'package:flutter/material.dart';
 
 class custom_divider extends StatelessWidget {
@@ -5,15 +6,31 @@ class custom_divider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: Divider(color: Colors.grey, thickness: 1)),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text('OR', style: TextStyle(color: Colors.grey)),
-        ),
-        Expanded(child: Divider(color: Colors.grey, thickness: 1)),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Divider(
+              color: AppColors.primaryText.withOpacity(0.7),
+              thickness: 0.5,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              'OR',
+              style: TextStyle(color: AppColors.primaryText.withOpacity(0.7)),
+            ),
+          ),
+          Expanded(
+            child: Divider(
+              color: AppColors.primaryText.withOpacity(0.7),
+              thickness: 0.5,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
