@@ -11,7 +11,7 @@ class google_and_apple_login extends StatelessWidget {
       children: [
         // Google Button
         CustomButton(
-          text: 'Google',
+          text: 'Sign With Google',
           onpressed: () {},
           color: AppColors.cardBackgroundColor,
           textColor: AppColors.primaryText,
@@ -20,7 +20,7 @@ class google_and_apple_login extends StatelessWidget {
         const SizedBox(height: 18),
 
         CustomButton(
-          text: 'Apple',
+          text: 'Sign WithApple',
           onpressed: () {},
           color: AppColors.cardBackgroundColor,
           textColor: AppColors.primaryText,
