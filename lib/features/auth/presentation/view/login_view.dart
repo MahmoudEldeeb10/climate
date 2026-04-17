@@ -38,35 +38,38 @@ class _LoginViewState extends State<LoginView> {
             top: 42,
             bottom: 22,
           ),
-          child: Column(
-            children: [
-              CustomIcon(icon: Icons.cloud),
-              SizedBox(height: 24),
-              Text('Welcome Back', style: Styles.textStyle30),
-              Text('Sign in to continue', style: Styles.textStyle14),
-              SizedBox(height: 24),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomIcon(icon: Icons.cloud),
+                SizedBox(height: 24),
+                Text('Welcome Back', style: Styles.textStyle30),
+                Text('Sign in to continue', style: Styles.textStyle14),
+                SizedBox(height: 24),
 
-              LoginTextFields(
-                emailController: emailController,
-                passwordController: passwordController,
-              ),
-              SizedBox(height: 16),
-              ForgotPasword(),
-              SizedBox(height: 16),
+                LoginTextFields(
+                  emailController: emailController,
+                  passwordController: passwordController,
+                ),
+                SizedBox(height: 16),
+                ForgotPasword(),
+                SizedBox(height: 16),
 
-              CustomButton(
-                text: 'Sign In',
-                onpressed: () {},
-                color: AppColors.primaryText,
-                textColor: AppColors.tertiaryText,
-              ),
-              SizedBox(height: 16),
-              custom_divider(),
-              SizedBox(height: 16),
-              google_and_apple_login(),
-              Spacer(),
-              singup_text(),
-            ],
+                CustomButton(
+                  text: 'Sign In',
+                  onpressed: () {},
+                  color: AppColors.primaryText,
+                  textColor: AppColors.tertiaryText,
+                ),
+                SizedBox(height: 16),
+                custom_divider(),
+                SizedBox(height: 16),
+                google_and_apple_login(),
+                SizedBox(height: 32),
+
+                singup_text(),
+              ],
+            ),
           ),
         ),
       ),
