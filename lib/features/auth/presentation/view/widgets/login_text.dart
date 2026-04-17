@@ -17,7 +17,7 @@ class LoginText extends StatelessWidget {
             AppNavigator.goToAndClearStack(context, LoginView());
           },
           child: Text(
-            'Sign Up',
+            'Sign In',
             style: Styles.textStyle16.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
