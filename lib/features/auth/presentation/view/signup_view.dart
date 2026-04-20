@@ -43,7 +43,10 @@ class _SignupViewState extends State<SignupView> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                CustomIcon(icon: Icons.cloud),
+                Image.asset(
+                  'assets/images/appLogo2.png',
+                  height: MediaQuery.of(context).size.height * 0.2,
+                ),
                 SizedBox(height: 24),
                 Text('Create Account', style: Styles.textStyle30),
                 Text('Join ClimateAi today', style: Styles.textStyle14),

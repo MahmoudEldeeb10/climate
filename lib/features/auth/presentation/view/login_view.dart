@@ -41,7 +41,10 @@ class _LoginViewState extends State<LoginView> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                CustomIcon(icon: Icons.cloud),
+                Image.asset(
+                  'assets/images/appLogo2.png',
+                  height: MediaQuery.of(context).size.height * 0.2,
+                ),
                 SizedBox(height: 24),
                 Text('Welcome Back', style: Styles.textStyle30),
                 Text('Sign in to continue', style: Styles.textStyle14),
