@@ -1,6 +1,6 @@
 import 'package:climate/constants.dart';
-import 'package:climate/features/auth/presentation/view/login_view.dart';
 import 'package:climate/features/botton_nav_bar/presentation/manager/cubit/bottom_nav_cubit.dart';
+import 'package:climate/features/splash/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,7 @@ class ClimateApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
 
         theme: ThemeData(scaffoldBackgroundColor: AppColors.backgroundColor),
-        home: LoginView(),
+        home: const SplashView(),
       ),
     );
   }

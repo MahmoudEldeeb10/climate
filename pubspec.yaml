@@ -33,7 +33,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
-  flutter_native_splash: ^2.4.7
 
 dev_dependencies:
 
@@ -84,13 +83,3 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 
-flutter_native_splash:
-  color: "#2576F9"
-  image: assets/images/logo.png
-
-  android: true
-  ios: true
-
-  android_12:
-    image: assets/images/logo.png
-    color: "#2576F9"
