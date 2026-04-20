@@ -1,7 +1,6 @@
 import 'package:climate/constants.dart';
 import 'package:climate/core/utils/styles.dart';
 import 'package:climate/core/widgets/custom_button.dart';
-import 'package:climate/core/widgets/custom_icon.dart';
 import 'package:climate/features/auth/presentation/view/widgets/custom_divider.dart';
 import 'package:climate/features/auth/presentation/view/widgets/forgot_password.dart';
 import 'package:climate/features/auth/presentation/view/widgets/google_and_apple_login.dart';
