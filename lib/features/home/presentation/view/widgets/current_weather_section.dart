@@ -27,7 +27,7 @@ class CurrentWeatherSection extends StatelessWidget {
         Text("72°", style: Styles.textStyle30.copyWith(fontSize: 60)),
         Text(
           "Partly Cloudy",
-          style: TextStyle(fontSize: 18, color: Colors.white70),
+          style: TextStyle(fontSize: 18, color: AppColors.primaryText),
         ),
       ],
     );
