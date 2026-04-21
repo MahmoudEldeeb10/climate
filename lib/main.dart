@@ -1,5 +1,6 @@
 import 'package:climate/constants.dart';
 import 'package:climate/features/botton_nav_bar/presentation/manager/cubit/bottom_nav_cubit.dart';
+import 'package:climate/features/botton_nav_bar/presentation/views/main_view.dart';
 import 'package:climate/features/splash/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
