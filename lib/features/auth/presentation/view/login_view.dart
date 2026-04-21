@@ -1,3 +1,4 @@
+import 'package:climate/appnavigator.dart';
 import 'package:climate/constants.dart';
 import 'package:climate/core/utils/styles.dart';
 import 'package:climate/core/widgets/custom_button.dart';
@@ -6,6 +7,7 @@ import 'package:climate/features/auth/presentation/view/widgets/forgot_password.
 import 'package:climate/features/auth/presentation/view/widgets/google_and_apple_login.dart';
 import 'package:climate/features/auth/presentation/view/widgets/login_text_fields.dart';
 import 'package:climate/features/auth/presentation/view/widgets/signup_text.dart';
+import 'package:climate/features/botton_nav_bar/presentation/views/main_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatefulWidget {
@@ -59,7 +61,9 @@ class _LoginViewState extends State<LoginView> {
 
                 CustomButton(
                   text: 'Sign In',
-                  onpressed: () {},
+                  onpressed: () {
+                    AppNavigator.goToAndClearStack(context, MainView());
+                  },
                   color: AppColors.primaryText,
                   textColor: AppColors.tertiaryText,
                 ),
