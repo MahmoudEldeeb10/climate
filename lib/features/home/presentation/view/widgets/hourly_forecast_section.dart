@@ -22,7 +22,7 @@ class HourlyForecastSection extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackgroundColor,
+        color: AppColors.cardBackgroundColor.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
       ),
       child: SizedBox(
@@ -38,7 +38,7 @@ class HourlyForecastSection extends StatelessWidget {
               margin: const EdgeInsets.only(right: 12),
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
-                color: AppColors.cardBackgroundColor,
+                color: AppColors.cardBackgroundColor.withOpacity(0.4),
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
                   color: AppColors.primaryText.withOpacity(0.2),
