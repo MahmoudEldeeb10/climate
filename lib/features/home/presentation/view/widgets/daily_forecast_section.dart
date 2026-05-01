@@ -1,50 +1,76 @@
 import 'package:climate/constants.dart';
 import 'package:climate/core/utils/styles.dart';
+import 'package:climate/features/home/presentation/manager/days_forecast_cubit/days_forecast_cubit.dart';
+import 'package:climate/features/home/presentation/manager/days_forecast_cubit/days_forecast_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DailyForecastSection extends StatelessWidget {
   const DailyForecastSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> dailyData = [
-      {'day': 'Mon', 'icon': Icons.cloud, 'temp': '22°'},
-      {'day': 'Tue', 'icon': Icons.wb_sunny, 'temp': '25°'},
-      {'day': 'Wed', 'icon': Icons.grain, 'temp': '20°'},
-      {'day': 'Thu', 'icon': Icons.cloud, 'temp': '23°'},
-      {'day': 'Fri', 'icon': Icons.wb_sunny, 'temp': '26°'},
-    ];
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.cardBackgroundColor.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('5-Day Forecast', style: Styles.textStyle16),
-
-          const SizedBox(height: 15),
-
-          ...dailyData.map((item) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(item['day'], style: Styles.textStyle16),
-
-                  Icon(item['icon'], color: Colors.white),
-
-                  Text(item['temp'], style: Styles.textStyle16),
-                ],
-              ),
-            );
-          }).toList(),
-        ],
+    return BlocProvider(
+      create: (context) => DaysForecastCubit()..getDailyForecast(),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackgroundColor.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '5-Day Forecast',
+              style: Styles.textStyle22.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 15),
+            BlocBuilder<DaysForecastCubit, DaysForecastState>(
+              builder: (context, state) {
+                if (state is DaysForecastLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is DaysForecastFailure) {
+                  return Center(
+                    child: Text(state.errMessage, style: Styles.textStyle16),
+                  );
+                }
+                if (state is DaysForecastSuccess) {
+                  return Column(
+                    children: state.forecasts.map((item) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              item.day.substring(0, 3),
+                              style: Styles.textStyle16,
+                            ),
+                            Text(
+                              item.date,
+                              style: Styles.textStyle16.copyWith(
+                                color: Colors.white60,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Text(
+                              '${item.temp.round()}°',
+                              style: Styles.textStyle16,
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
