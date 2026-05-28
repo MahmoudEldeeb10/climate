@@ -1,23 +1,21 @@
 import 'package:climate/constants.dart';
 import 'package:climate/core/utils/styles.dart';
+import 'package:climate/features/home/data/models/weather_model.dart';
 import 'package:flutter/material.dart';
 
 class HourlyForecastSection extends StatelessWidget {
-  const HourlyForecastSection({super.key});
+  final List<HourlyWeather> hourly;
+
+  const HourlyForecastSection({super.key, required this.hourly});
+
+  IconData _weatherIcon(double temp) {
+    if (temp >= 35) return Icons.wb_sunny;
+    if (temp >= 25) return Icons.cloud;
+    return Icons.grain;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> hourlyData = [
-      {'time': 'Now', 'icon': Icons.cloud, 'temp': '72°'},
-      {'time': '1 PM', 'icon': Icons.wb_sunny, 'temp': '74°'},
-      {'time': '2 PM', 'icon': Icons.cloud, 'temp': '73°'},
-      {'time': '3 PM', 'icon': Icons.grain, 'temp': '70°'},
-      {'time': '4 PM', 'icon': Icons.cloud, 'temp': '69°'},
-      {'time': '5 PM', 'icon': Icons.wb_sunny, 'temp': '71°'},
-      {'time': '6 PM', 'icon': Icons.cloud, 'temp': '68°'},
-      {'time': '7 PM', 'icon': Icons.grain, 'temp': '66°'},
-    ];
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       padding: const EdgeInsets.all(16),
@@ -29,9 +27,9 @@ class HourlyForecastSection extends StatelessWidget {
         height: 110,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: hourlyData.length,
+          itemCount: hourly.length,
           itemBuilder: (context, index) {
-            final item = hourlyData[index];
+            final item = hourly[index];
 
             return Container(
               width: 70,
@@ -47,10 +45,14 @@ class HourlyForecastSection extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(item['time'], style: Styles.textStyle14),
-                  Icon(item['icon'], color: AppColors.primaryText, size: 26),
+                  Text(item.formattedTime, style: Styles.textStyle14),
+                  Icon(
+                    _weatherIcon(item.temperature),
+                    color: AppColors.primaryText,
+                    size: 26,
+                  ),
                   Text(
-                    item['temp'],
+                    '${item.temperature.round()}°',
                     style: const TextStyle(
                       color: AppColors.primaryText,
                       fontSize: 16,
