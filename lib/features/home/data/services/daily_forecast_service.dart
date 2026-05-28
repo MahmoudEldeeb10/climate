@@ -8,10 +8,8 @@ class DailyForecastService {
     final response = await _dio.get(
       'https://hagermaher-forcasting.hf.space/days_forcasting',
     );
-
     final List forecasts = response.data['forecast'];
-    return forecasts
-        .map((item) => DailyForecastModel.fromJson(item))
-        .toList();
+
+    return forecasts.map((item) => DailyForecastModel.fromJson(item)).toList();
   }
 }

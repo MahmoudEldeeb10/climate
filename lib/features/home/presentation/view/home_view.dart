@@ -32,30 +32,3 @@ class HomeView extends StatelessWidget {
 
 
 
-  // Text(
-          //   'City Name',
-          //   style: const TextStyle(
-          //     fontSize: 30,
-          //     color: Colors.white,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          // ),
-
-          // const SizedBox(height: 10),
-
-          // Text(
-          //   "30°",
-          //   style: const TextStyle(fontSize: 60, color: Colors.white),
-          // ),
-
-          // Text(
-          //   "Sunny",
-          //   style: const TextStyle(fontSize: 20, color: Colors.white70),
-          // ),
-
-          // const SizedBox(height: 20),
-
-          // Image.network(
-          //   "https://openweathermap.org/img/wn/01d@2x.png",
-          //   width: 100,
-          // ),
