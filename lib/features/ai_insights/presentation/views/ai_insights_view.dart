@@ -15,7 +15,11 @@ class AiInsightsView extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: const [
-            HeaderWidget(),
+            HeaderWidget(
+              imagePath: 'assets/images/tip.png',
+              title: 'AI Insights',
+              subTitle: 'Personalized recommendations',
+            ),
             SizedBox(height: 20),
 
             GlassCard(
