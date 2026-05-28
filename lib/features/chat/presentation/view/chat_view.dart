@@ -5,15 +5,6 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 50),
-            Center(child: Text('Chat Bot Coming Soon!')),
-          ],
-        ),
-      ),
-    );
+    return const Scaffold(body: Center(child: Text('Chat View')));
   }
 }
