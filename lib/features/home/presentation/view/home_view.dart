@@ -1,3 +1,4 @@
+import 'package:climate/features/chat/presentation/views/chat_view.dart';
 import 'package:climate/features/home/presentation/manager/weather_cubit.dart';
 import 'package:climate/features/home/presentation/manager/weather_state.dart';
 import 'package:climate/features/home/presentation/view/widgets/cards_info_grid.dart';
@@ -18,10 +19,22 @@ class HomeView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          actions: const [
+          actions: [
             Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Icon(Icons.chat_outlined, color: Colors.white, size: 28),
+              padding: const EdgeInsets.only(right: 16),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.chat_outlined,
+                  color: Colors.white,
+                  size: 28,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ChatView()),
+                  );
+                },
+              ),
             ),
           ],
         ),
