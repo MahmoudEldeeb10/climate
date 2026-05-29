@@ -19,7 +19,10 @@ class StatsView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Weather Stats', style: Styles.textStyle22),
+          title: Text(
+            'Weather Stats',
+            style: Styles.textStyle22.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
         body: SafeArea(
           child: BlocBuilder<WeatherCubit, WeatherState>(
