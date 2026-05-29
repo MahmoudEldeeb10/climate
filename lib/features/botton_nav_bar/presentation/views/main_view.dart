@@ -1,5 +1,5 @@
 import 'package:climate/constants.dart';
-import 'package:climate/features/ai_insights/presentation/views/ai_insights_view.dart';
+import 'package:climate/features/statistics/presentation/views/statistics_view.dart';
 import 'package:climate/features/botton_nav_bar/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:climate/features/chat/presentation/views/chat_view.dart';
 import 'package:climate/features/home/presentation/view/home_view.dart';
@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainView extends StatelessWidget {
   MainView({super.key});
 
-  final List pages = [HomeView(), AiInsightsView(), ChatView()];
+  final List pages = [HomeView(), StatsView(), ChatView()];
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavCubit, BottomNavState>(
