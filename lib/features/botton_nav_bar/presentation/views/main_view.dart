@@ -1,4 +1,5 @@
 import 'package:climate/constants.dart';
+import 'package:climate/features/helper/presentation/view/helper_view.dart';
 import 'package:climate/features/statistics/presentation/views/statistics_view.dart';
 import 'package:climate/features/botton_nav_bar/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:climate/features/chat/presentation/views/chat_view.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainView extends StatelessWidget {
   MainView({super.key});
 
-  final List pages = [HomeView(), StatsView(), ChatView()];
+  final List pages = [HomeView(), StatsView(), HelperView()];
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavCubit, BottomNavState>(
@@ -44,12 +45,12 @@ class MainView extends StatelessWidget {
                         label: 'Home',
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.insights_outlined),
+                        icon: Icon(Icons.bar_chart_outlined),
                         label: 'Statistics',
                       ),
                       BottomNavigationBarItem(
-                        icon: Icon(Icons.chat_outlined),
-                        label: 'Chat Bot',
+                        icon: Icon(Icons.insights_outlined),
+                        label: 'Helper',
                       ),
                     ],
                   ),
