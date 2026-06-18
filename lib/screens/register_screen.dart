@@ -38,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (success && mounted) {
-        Navigator.pop(context);
+        Navigator.pushReplacementNamed(context, '/home');
       } else if (!success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(authProvider.errorMessage)),

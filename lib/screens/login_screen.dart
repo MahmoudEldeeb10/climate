@@ -32,7 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
         _passwordController.text,
       );
 
-      if (!success && mounted) {
+      if (success && mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else if (!success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(authProvider.errorMessage)),
         );
