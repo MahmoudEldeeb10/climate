@@ -17,32 +17,42 @@ class WeatherModel {
     final hourlyJson = json['hourly'] as Map<String, dynamic>;
     final dailyJson = json['daily'] as Map<String, dynamic>;
 
-    // Hourly — take next 8 hours only
+    // Hourly
     final times = List<String>.from(hourlyJson['time']);
+
     final temps = List<double>.from(
       (hourlyJson['temperature_2m'] as List).map((e) => (e as num).toDouble()),
     );
+
     final windSpeeds = List<double>.from(
       (hourlyJson['wind_speed_10m'] as List).map((e) => (e as num).toDouble()),
     );
+
     final uvIndexes = List<double>.from(
       (hourlyJson['uv_index'] as List).map((e) => (e as num).toDouble()),
     );
+
     final humidities = List<double>.from(
-      (hourlyJson['relative_humidity_2m'] as List)
-          .map((e) => (e as num).toDouble()),
+      (hourlyJson['relative_humidity_2m'] as List).map(
+        (e) => (e as num).toDouble(),
+      ),
     );
 
-    // Find current hour index
     final now = DateTime.now();
+
     int startIndex = times.indexWhere((t) {
       final dt = DateTime.parse(t);
+
       return dt.hour == now.hour && dt.day == now.day;
     });
-    if (startIndex == -1) startIndex = 0;
+
+    if (startIndex == -1) {
+      startIndex = 0;
+    }
 
     final hourlyList = List.generate(8, (i) {
       final idx = startIndex + i;
+
       return HourlyWeather(
         time: times[idx],
         temperature: temps[idx],
@@ -53,8 +63,11 @@ class WeatherModel {
     });
 
     // Daily
+
     final dailyTimes = List<String>.from(dailyJson['time']);
+
     final sunrises = List<String>.from(dailyJson['sunrise']);
+
     final sunsets = List<String>.from(dailyJson['sunset']);
 
     final dailyList = List.generate(dailyTimes.length, (i) {
@@ -67,9 +80,41 @@ class WeatherModel {
 
     return WeatherModel(
       currentWindSpeed: (current['wind_speed_10m'] as num).toDouble(),
+
       currentWindDirection: (current['wind_direction_10m'] as num).toDouble(),
+
       hourly: hourlyList,
       daily: dailyList,
+    );
+  }
+
+  /// Fake data used by Skeletonizer
+  factory WeatherModel.fake() {
+    return WeatherModel(
+      currentWindSpeed: 12,
+      currentWindDirection: 180,
+
+      hourly: List.generate(
+        8,
+        (index) => HourlyWeather(
+          time: DateTime.now().add(Duration(hours: index)).toIso8601String(),
+          temperature: 25,
+          windSpeed: 10,
+          uvIndex: 4,
+          humidity: 65,
+        ),
+      ),
+
+      daily: List.generate(
+        7,
+        (index) => DailyWeather(
+          date: DateTime.now().add(Duration(days: index)).toIso8601String(),
+
+          sunrise: DateTime.now().toIso8601String(),
+
+          sunset: DateTime.now().toIso8601String(),
+        ),
+      ),
     );
   }
 }
@@ -89,14 +134,21 @@ class HourlyWeather {
     required this.humidity,
   });
 
-  /// Returns "Now", "1 PM", "2 PM", etc.
   String get formattedTime {
     final dt = DateTime.parse(time);
+
     final now = DateTime.now();
-    if (dt.hour == now.hour && dt.day == now.day) return 'Now';
+
+    if (dt.hour == now.hour && dt.day == now.day) {
+      return 'Now';
+    }
+
     final hour = dt.hour;
+
     final suffix = hour >= 12 ? 'PM' : 'AM';
+
     final displayHour = hour % 12 == 0 ? 12 : hour % 12;
+
     return '$displayHour $suffix';
   }
 
@@ -105,6 +157,7 @@ class HourlyWeather {
     if (uvIndex <= 5) return 'Moderate';
     if (uvIndex <= 7) return 'High';
     if (uvIndex <= 10) return 'Very High';
+
     return 'Extreme';
   }
 }
@@ -120,9 +173,9 @@ class DailyWeather {
     required this.sunset,
   });
 
-  /// Returns "Monday", "Tuesday", etc.
   String get dayName {
     final dt = DateTime.parse(date);
+
     const days = [
       'Monday',
       'Tuesday',
@@ -132,6 +185,7 @@ class DailyWeather {
       'Saturday',
       'Sunday',
     ];
+
     return days[dt.weekday - 1];
   }
 }

@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:math' as math;
 
+import 'package:skeletonizer/skeletonizer.dart';
+
 class StatsView extends StatelessWidget {
   const StatsView({super.key});
 
@@ -27,11 +29,12 @@ class StatsView extends StatelessWidget {
         body: SafeArea(
           child: BlocBuilder<WeatherCubit, WeatherState>(
             builder: (context, state) {
-              if (state is WeatherLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(color: Colors.white),
-                );
-              }
+              final isLoading = state is WeatherLoading;
+
+              final weather = state is WeatherSuccess
+                  ? state.weather
+                  : WeatherModel.fake();
+
               if (state is WeatherFailure) {
                 return Center(
                   child: Text(
@@ -40,10 +43,11 @@ class StatsView extends StatelessWidget {
                   ),
                 );
               }
-              if (state is WeatherSuccess) {
-                return _StatsBody(weather: state.weather);
-              }
-              return const SizedBox();
+
+              return Skeletonizer(
+                enabled: isLoading,
+                child: _StatsBody(weather: weather),
+              );
             },
           ),
         ),
@@ -648,6 +652,8 @@ class _ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSkeleton = Skeletonizer.of(context)?.enabled ?? false;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -661,8 +667,21 @@ class _ChartCard extends StatelessWidget {
             title,
             style: const TextStyle(color: Colors.white70, fontSize: 13),
           ),
+
           const SizedBox(height: 16),
-          child,
+
+          // أثناء اللودينج نعرض placeholder
+          if (isSkeleton)
+            Container(
+              height: 180,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white10,
+                borderRadius: BorderRadius.circular(12),
+              ),
+            )
+          else
+            child,
         ],
       ),
     );

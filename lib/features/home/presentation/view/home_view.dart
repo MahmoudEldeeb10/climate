@@ -1,12 +1,15 @@
 import 'package:climate/features/chat/presentation/views/chat_view.dart';
+import 'package:climate/features/home/data/models/weather_model.dart';
 import 'package:climate/features/home/presentation/manager/weather_cubit.dart';
 import 'package:climate/features/home/presentation/manager/weather_state.dart';
 import 'package:climate/features/home/presentation/view/widgets/cards_info_grid.dart';
 import 'package:climate/features/home/presentation/view/widgets/current_weather_section.dart';
 import 'package:climate/features/home/presentation/view/widgets/daily_forecast_section.dart';
 import 'package:climate/features/home/presentation/view/widgets/hourly_forecast_section.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -15,6 +18,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => WeatherCubit()..getWeather(),
+
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -41,11 +45,11 @@ class HomeView extends StatelessWidget {
         body: SafeArea(
           child: BlocBuilder<WeatherCubit, WeatherState>(
             builder: (context, state) {
-              if (state is WeatherLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(color: Colors.white),
-                );
-              }
+              final isLoading = state is WeatherLoading;
+
+              final weather = state is WeatherSuccess
+                  ? state.weather
+                  : WeatherModel.fake();
 
               if (state is WeatherFailure) {
                 return Center(
@@ -56,25 +60,26 @@ class HomeView extends StatelessWidget {
                 );
               }
 
-              if (state is WeatherSuccess) {
-                final w = state.weather;
-                return SingleChildScrollView(
+              return Skeletonizer(
+                enabled: isLoading,
+                child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 50, top: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CurrentWeatherSection(weather: w),
-                        HourlyForecastSection(hourly: w.hourly),
-                        DailyForecastSection(daily: w.daily),
-                        CardsInfoGrid(weather: w),
+                        CurrentWeatherSection(weather: weather),
+
+                        HourlyForecastSection(hourly: weather.hourly),
+
+                        DailyForecastSection(daily: weather.daily),
+
+                        CardsInfoGrid(weather: weather),
                       ],
                     ),
                   ),
-                );
-              }
-
-              return const SizedBox();
+                ),
+              );
             },
           ),
         ),

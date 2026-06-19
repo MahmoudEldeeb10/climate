@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:climate/features/home/data/models/weather_model.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../constants.dart';
 
@@ -448,13 +449,13 @@ class HelperView extends StatelessWidget {
         child: SafeArea(
           child: BlocBuilder<WeatherCubit, WeatherState>(
             builder: (ctx, state) {
-              if (state is WeatherLoading || state is WeatherInitial) {
-                return const Center(
-                  child: CupertinoActivityIndicator(
-                    color: AppColors.primaryText,
-                  ),
-                );
-              }
+              final isLoading =
+                  state is WeatherLoading || state is WeatherInitial;
+
+              final weather = state is WeatherSuccess
+                  ? state.weather
+                  : WeatherModel.fake();
+
               if (state is WeatherFailure) {
                 return Center(
                   child: Column(
@@ -466,9 +467,9 @@ class HelperView extends StatelessWidget {
                         size: 40,
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         'Could not load weather',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.primaryText,
                           fontSize: 15,
                         ),
@@ -485,28 +486,34 @@ class HelperView extends StatelessWidget {
                   ),
                 );
               }
-              final weather = (state as WeatherSuccess).weather;
-              return CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(child: _HomeHeader(weather: weather)),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    sliver: SliverGrid(
-                      delegate: SliverChildBuilderDelegate(
-                        (c, i) => _ProfCard(prof: _profs[i], weather: weather),
-                        childCount: _profs.length,
+
+              return Skeletonizer(
+                enabled: isLoading,
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(child: _HomeHeader(weather: weather)),
+
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      sliver: SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (c, i) =>
+                              _ProfCard(prof: _profs[i], weather: weather),
+                          childCount: _profs.length,
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 14,
+                              mainAxisSpacing: 14,
+                              childAspectRatio: 1.08,
+                            ),
                       ),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 14,
-                            mainAxisSpacing: 14,
-                            childAspectRatio: 1.08,
-                          ),
                     ),
-                  ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 32)),
-                ],
+
+                    const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                  ],
+                ),
               );
             },
           ),
@@ -571,12 +578,15 @@ class _ProfCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-    onTap: () => Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (_) => WeatherProDetailPage(prof: prof, weather: weather),
-      ),
-    ),
+    onTap: Skeletonizer.of(context)?.enabled == true
+        ? null
+        : () => Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (_) =>
+                  WeatherProDetailPage(prof: prof, weather: weather),
+            ),
+          ),
     child: Container(
       decoration: BoxDecoration(
         color: AppColors.cardBackgroundColor,
@@ -832,79 +842,6 @@ class _DetailState extends State<WeatherProDetailPage> {
                     )
                     .toList(),
               ),
-
-              // ── AI Briefing ──────────────────────────────────────────────────
-              // const SizedBox(height: 24),
-              // _sectionLabel('AI BRIEFING'),
-              // const SizedBox(height: 10),
-              // Container(
-              //   width: double.infinity,
-              //   padding: const EdgeInsets.all(18),
-              //   decoration: BoxDecoration(
-              //     color: AppColors.cardBackgroundColor2,
-              //     borderRadius: BorderRadius.circular(18),
-              //   ),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       const Row(
-              //         children: [
-              //           Icon(
-              //             CupertinoIcons.waveform,
-              //             size: 13,
-              //             color: AppColors.secondaryText,
-              //           ),
-              //           SizedBox(width: 5),
-              //           Text(
-              //             'Powered by Claude',
-              //             style: TextStyle(
-              //               fontSize: 11,
-              //               color: AppColors.secondaryText,
-              //               letterSpacing: 0.4,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //       const SizedBox(height: 12),
-              //       if (_loading)
-              //         const _Dots()
-              //       else if (_error)
-              //         Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             const Text(
-              //               'Could not load briefing.',
-              //               style: TextStyle(
-              //                 fontSize: 13,
-              //                 color: AppColors.secondaryText,
-              //               ),
-              //             ),
-              //             const SizedBox(height: 8),
-              //             GestureDetector(
-              //               onTap: _fetch,
-              //               child: const Text(
-              //                 'Tap to retry',
-              //                 style: TextStyle(
-              //                   fontSize: 13,
-              //                   color: AppColors.primaryText,
-              //                   decoration: TextDecoration.underline,
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         )
-              //       else
-              //         Text(
-              //           _briefing ?? '',
-              //           style: const TextStyle(
-              //             fontSize: 14,
-              //             color: AppColors.primaryText,
-              //             height: 1.7,
-              //           ),
-              //         ),
-              //     ],
-              //   ),
-              // ),
 
               // ── Condition checklist ──────────────────────────────────────────
               const SizedBox(height: 24),
