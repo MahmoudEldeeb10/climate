@@ -22,6 +22,7 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
+  final _formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -70,88 +71,74 @@ class _SignupViewState extends State<SignupView> {
                   bottom: 22,
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/appLogo2.png',
-                        height: MediaQuery.of(context).size.height * 0.2,
-                      ),
-                      const SizedBox(height: 24),
-                      Text('Create Account', style: Styles.textStyle30),
-                      Text('Join ClimateAi today', style: Styles.textStyle14),
-                      const SizedBox(height: 24),
-                      SignupTextFields(
-                        fullNameController: fullNameController,
-                        emailController: emailController,
-                        passwordController: passwordController,
-                        confirmPasswordController: confirmPasswordController,
-                      ),
-                      const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          'By signing up, you agree to our Terms of Service and Privacy Policy.',
-                          style: Styles.textStyle14,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/appLogo2.png',
+                          height: MediaQuery.of(context).size.height * 0.2,
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      IgnorePointer(
-                        ignoring: isLoading,
-                        child: Opacity(
-                          opacity: isLoading ? 0.6 : 1,
-                          child: CustomButton(
-                            text: 'Sign Up',
-                            onpressed: () {
-                              final email = emailController.text.trim();
-                              final password = passwordController.text.trim();
-                              final confirmPassword = confirmPasswordController
-                                  .text
-                                  .trim();
-
-                              if (email.isEmpty || password.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'please fill in all required fields',
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-
-                              if (password != confirmPassword) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Passwords do not match'),
-                                  ),
-                                );
-                                return;
-                              }
-
-                              context.read<AuthCubit>().register(
-                                email: email,
-                                password: password,
-                              );
-                            },
-                            color: AppColors.primaryText,
-                            textColor: AppColors.tertiaryText,
+                        const SizedBox(height: 24),
+                        Text('Create Account', style: Styles.textStyle30),
+                        Text('Join ClimateAi today', style: Styles.textStyle14),
+                        const SizedBox(height: 24),
+                        SignupTextFields(
+                          fullNameController: fullNameController,
+                          emailController: emailController,
+                          passwordController: passwordController,
+                          confirmPasswordController: confirmPasswordController,
+                        ),
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Text(
+                            'By signing up, you agree to our Terms of Service and Privacy Policy.',
+                            style: Styles.textStyle14,
                           ),
                         ),
-                      ),
-                      if (isLoading)
-                        const Padding(
-                          padding: EdgeInsets.only(top: 12),
-                          child: CircularProgressIndicator(),
+                        const SizedBox(height: 16),
+                        IgnorePointer(
+                          ignoring: isLoading,
+                          child: Opacity(
+                            opacity: isLoading ? 0.6 : 1,
+                            child: CustomButton(
+                              text: 'Sign Up',
+                              onpressed: () {
+                                // Empty/invalid fields will automatically
+                                // turn red with an error message
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
+
+                                final email = emailController.text.trim();
+                                final password = passwordController.text.trim();
+
+                                context.read<AuthCubit>().register(
+                                  email: email,
+                                  password: password,
+                                );
+                              },
+                              color: AppColors.primaryText,
+                              textColor: AppColors.tertiaryText,
+                            ),
+                          ),
                         ),
+                        if (isLoading)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 12),
+                            child: CircularProgressIndicator(),
+                          ),
 
-                      const SizedBox(height: 16),
-                      custom_divider(),
-                      const SizedBox(height: 16),
-                      google_and_apple_login(),
-                      const SizedBox(height: 32),
+                        const SizedBox(height: 16),
+                        custom_divider(),
+                        const SizedBox(height: 16),
+                        google_and_apple_login(),
+                        const SizedBox(height: 32),
 
-                      LoginText(),
-                    ],
+                        LoginText(),
+                      ],
+                    ),
                   ),
                 ),
               );

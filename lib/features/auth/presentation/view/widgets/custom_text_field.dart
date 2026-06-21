@@ -40,7 +40,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return TextFormField(
       style: const TextStyle(color: AppColors.primaryText),
       cursorColor: AppColors.primaryText,
-
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       obscureText: _obscureText,
@@ -81,6 +81,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColors.primaryText, width: 0.5),
         ),
+        // error styles
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 0.7),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        errorStyle: Styles.textStyle14.copyWith(color: Colors.red),
       ),
     );
   }

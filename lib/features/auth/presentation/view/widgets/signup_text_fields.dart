@@ -6,7 +6,7 @@ class SignupTextFields extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
-  SignupTextFields({
+  const SignupTextFields({
     super.key,
     required this.fullNameController,
     required this.emailController,
@@ -18,22 +18,63 @@ class SignupTextFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomTextField(controller: fullNameController, hint: 'Full Name'),
-        SizedBox(height: 16),
+        CustomTextField(
+          controller: fullNameController,
+          hint: 'Full Name',
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Full name is required';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16),
 
-        CustomTextField(controller: emailController, hint: 'Email'),
-        SizedBox(height: 16),
+        CustomTextField(
+          controller: emailController,
+          hint: 'Email',
+          keyboardType: TextInputType.emailAddress,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Email is required';
+            }
+            if (!value.contains('@')) {
+              return 'Enter a valid email';
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 16),
+
         CustomTextField(
           controller: passwordController,
           hint: 'Password',
           isPassword: true,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Password is required';
+            }
+            if (value.length < 6) {
+              return 'Password must be at least 6 characters';
+            }
+            return null;
+          },
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
 
         CustomTextField(
           controller: confirmPasswordController,
           hint: 'Confirm Password',
           isPassword: true,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Please confirm your password';
+            }
+            if (value != passwordController.text) {
+              return 'Passwords do not match';
+            }
+            return null;
+          },
         ),
       ],
     );

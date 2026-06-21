@@ -2,7 +2,6 @@ import 'package:climate/constants.dart';
 import 'package:climate/features/helper/presentation/view/helper_view.dart';
 import 'package:climate/features/statistics/presentation/views/statistics_view.dart';
 import 'package:climate/features/botton_nav_bar/presentation/manager/cubit/bottom_nav_cubit.dart';
-import 'package:climate/features/chat/presentation/views/chat_view.dart';
 import 'package:climate/features/home/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

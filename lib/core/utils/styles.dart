@@ -19,4 +19,6 @@ class Styles {
     color: AppColors.primaryText,
     fontSize: 16,
   );
+
+  static TextStyle? get textStyle24 => null;
 }
